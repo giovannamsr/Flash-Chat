@@ -7,32 +7,17 @@
 //
 
 import UIKit
+import CLTypingLabel
 
 class WelcomeViewController: UIViewController {
 
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleLabel: CLTypingLabel!
     
     let appTitle = "⚡️FlashChat"
-    var charIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        titleLabel.animate(newText: appTitle, characterDelay: 0.1)
+        titleLabel.text = appTitle
     }
 }
 
-extension UILabel {
-
-    func animate(newText: String, characterDelay: TimeInterval) {
-        DispatchQueue.main.async {
-            self.text = ""
-            for (index, character) in newText.enumerated() {
-                DispatchQueue.main.asyncAfter(deadline: .now() + characterDelay * Double(index)) {
-                    self.text?.append(character)
-                }
-            }
-        }
-    }
-
-}
