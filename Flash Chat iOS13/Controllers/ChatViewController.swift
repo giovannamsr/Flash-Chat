@@ -40,6 +40,8 @@ class ChatViewController: UIViewController {
                         self.messages.append(message)
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
+                            let indexPath = IndexPath(row: self.messages.count-1, section: 0)
+                            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
                         }
                     }
                 }
@@ -62,6 +64,7 @@ class ChatViewController: UIViewController {
             }
             
         }
+        messageTextfield.text = ""
     }
     
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
@@ -82,8 +85,23 @@ extension ChatViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let message = messages[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! MessageCell
-        cell.messageLabel.text = messages[indexPath.row].body
+        cell.messageLabel.text = message.body
+        
+        if message.senderEmail == Auth.auth().currentUser?.email{
+            cell.leftMessageImage.isHidden = true
+            cell.rightMessageImage.isHidden = false
+            cell.messageBubble.backgroundColor = UIColor(named: Constants.BrandColors.lightPurple)
+            cell.messageLabel.textColor = UIColor(named: Constants.BrandColors.purple)
+        }
+        else{
+            cell.leftMessageImage.isHidden = false
+            cell.rightMessageImage.isHidden = true
+            cell.messageBubble.backgroundColor = UIColor(named: Constants.BrandColors.purple)
+            cell.messageLabel.textColor = UIColor(named: Constants.BrandColors.lightPurple)
+            
+        }
         return cell
     }
     
