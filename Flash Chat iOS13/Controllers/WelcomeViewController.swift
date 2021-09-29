@@ -13,7 +13,7 @@ class WelcomeViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: CLTypingLabel!
     
-    let appTitle = "⚡️FlashChat"
+    let appTitle = Constants.appName
     
     override func viewDidLoad() {
         super.viewDidLoad()
