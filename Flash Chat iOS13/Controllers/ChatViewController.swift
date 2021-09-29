@@ -28,8 +28,8 @@ class ChatViewController: UIViewController {
     }
     
     func loadMessages(){
-        messages = []
-        db.collection(Constants.FStore.collectionName).getDocuments() { (querySnapshot, err) in
+        db.collection(Constants.FStore.collectionName).addSnapshotListener { (querySnapshot, err) in
+            self.messages = []
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
